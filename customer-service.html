@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Test Page</title>
-</head>
-<body>
-    <h1>Test Page</h1>
-    <p>This is a test page.</p>
-    <!-- Start of abel-38744 Zendesk Widget script -->
-<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=0c930ffc-e54e-4f16-83a6-7f26e33d5fcc"> </script>
-<!-- End of abel-38744 Zendesk Widget script -->
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>联系客服</title>
 
+    <!-- 自动打开配置 -->
+    <script>
+      window.zESettings = {
+        webWidget: {
+          chat: { suppress: false }
+        }
+      };
+    </script>
+
+    <!-- Zendesk 脚本 -->
+    <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=0c930ffc-e54e-4f16-83a6-7f26e33d5fcc"></script>
+
+    <!-- 自动打开聊天窗口 -->
+    <script>
+      // 轮询直到 zE 可用
+      const openChat = () => {
+        if (window.zE) {
+          window.zE('webWidget:on', 'open', function () {
+            console.log('Chat opened');
+          });
+          window.zE('webWidget', 'open');
+        } else {
+          setTimeout(openChat, 500);
+        }
+      };
+      openChat();
+    </script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>正在加载客服...</h3>
+  </body>
+</html>
